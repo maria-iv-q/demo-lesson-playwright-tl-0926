@@ -1,4 +1,4 @@
-import { test } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { LoginPage } from '../../pom/pages/LoginPage'
 import { faker } from '@faker-js/faker/locale/en'
 import { PASSWORD, USERNAME } from '../../config/env-data'
@@ -23,7 +23,7 @@ test('TL-17-4 error message displayed when incorrect credentials used', async ({
   await loginPage.passwordField.fill(faker.lorem.word(8))
   await loginPage.signInButton.click()
   await loginPage.errorPopup.checkVisible()
-  await loginPage.errorPopup.errorMessage.isVisible()
+  await expect(loginPage.errorPopup.errorMessage).toBeVisible()
 })
 
 test('TL-17-5 login with correct credentials and verify order creation page', async ({ page }) => {
@@ -43,18 +43,18 @@ test('TL-17-6 login and create order', async ({ page }) => {
   await orderCreationPage.commentField.fill(faker.lorem.word(8))
   await orderCreationPage.orderButton.click()
   await orderCreationPage.successPopup.checkVisible()
-  await orderCreationPage.successPopup.title.isVisible()
+  await expect(orderCreationPage.successPopup.title).toBeVisible()
   await orderCreationPage.successPopup.okButton.click()
 })
 
 //Вход и проверка ошибок валидации при создании заказа
-test('TL-17-7 login and create order', async ({ page }) => {
+test('TL-17-7 login and fields validation checking during order creation', async ({ page }) => {
   const orderCreationPage = new OrderPage(page)
   await loginPage.signIn(USERNAME, PASSWORD)
   await orderCreationPage.usernameField.fill(faker.lorem.word(1))
-  await orderCreationPage.errorUsername.isVisible()
+  await expect(orderCreationPage.errorUsername).toBeVisible()
   await orderCreationPage.phoneField.fill(faker.lorem.word(1))
-  await orderCreationPage.errorPhone.isVisible()
+  await expect(orderCreationPage.errorPhone).toBeVisible()
 })
 
 // Выход из системы
