@@ -1,8 +1,8 @@
-import { test} from '@playwright/test'
+import { test } from '@playwright/test'
 import { LoginPage } from '../../pom/pages/LoginPage'
 import { PASSWORD, USERNAME } from '../../config/env-data'
 import { OrderPage } from '../../pom/pages/OrderPage'
-import { NotFoundPage} from '../../pom/pages/NotFoundPage'
+import { NotFoundPage } from '../../pom/pages/NotFoundPage'
 import { FoundPage } from '../../pom/pages/FoundPage'
 
 const TD = {
@@ -19,17 +19,17 @@ test.describe('TL-18 e2e', () => {
     loginPage = new LoginPage(page)
     orderPage = new OrderPage(page)
     notFoundPage = new NotFoundPage(page)
-    foundPage = new FoundPage (page)
+    foundPage = new FoundPage(page)
     await loginPage.open()
   })
 
   test('TL-18-1 Not Found Page test', async ({}) => {
     await loginPage.signIn(USERNAME, PASSWORD)
-    await orderPage.statusButton.checkVisible();
-    await orderPage.statusButton.click();
-    await orderPage.searchOrderInput.fill ('0');
-    await orderPage.searchButton.click();
-    await notFoundPage.checkNotFoundPageVisible();
+    await orderPage.statusButton.checkVisible()
+    await orderPage.statusButton.click()
+    await orderPage.searchOrderInput.fill('0')
+    await orderPage.searchButton.click()
+    await notFoundPage.checkNotFoundPageVisible()
   })
 
   test('TL-18-2 Found Page test', async ({}) => {
